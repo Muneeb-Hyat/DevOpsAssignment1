@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - backend-deployment.yaml
+  - frontend-deployment.yaml
+  - backend-service.yaml
+  - frontend-service.yaml
+  - ingress.yaml
+
+secretGenerator:
+  - name: mongo-secret
+    literals:
+      - uri=mongodb+srv://aleenaarif14:123@cluster.mongodb.net/yo?retryWrites=true&w=majority  # MongoDB URI stored securely
+
+generatorOptions:
+  disableNameSuffixHash: true

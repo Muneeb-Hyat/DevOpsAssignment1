@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: node:18.9.1  # Sample Node.js image for frontend application
+          ports:
+            - containerPort: 3000
+          env:
+            - name: REACT_APP_API_URL
+              value: "http://backend:5000"  # Internal Kubernetes communication with backend
+          volumeMounts:
+            - mountPath: /app
+              name: frontend-code
+      volumes:
+        - name: frontend-code
+          hostPath:
+            path: /path/to/frontend  # Adjust this path for your development environment

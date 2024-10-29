@@ -1,0 +1,25 @@
+version: '3'
+services:
+  backend:
+    build: ./mernapp/backend
+    ports:
+      - "5050:5050" 
+    networks:
+      - mern
+    environment:
+      MONGO_URI: mongodb+srv://aleenaarif14:123@cluster0.ls4r7.mongodb.net/yo?retryWrites=true&w=majority
+    depends_on:
+      - frontend  
+
+  frontend:
+    build: ./mernapp/frontend
+    ports:
+      - "5173:5173"  
+    networks:
+      - mern
+    environment:
+      REACT_APP_API_URL: http://backend:5050 
+
+networks:
+  mern:
+    driver: bridge
